@@ -1,0 +1,50 @@
+MS SQL Server Management Studio
+
+--Q1) Total Numbers of Orders Placed
+
+Select count(order_id) as no_of_orders
+from orders
+
+ --Q2 Total Revenue Generated from Pizza Sales
+
+ Select * from pizzas
+ select * from order_details
+
+ select round(sum(quantity*price),2) as total_revenue
+ from pizzas piz
+ inner join order_details det
+ on piz.pizza_id=det.pizza_id
+
+ --Q3 Identify the highest priced pizza
+
+ select  top 1 pizza_types.name, pizzas.price
+ from pizza_types
+ inner join pizzas
+ on pizza_types.pizza_type_id=pizzas.pizza_type_id
+order by price desc
+
+
+--Q4) Identify the most common size pizza ordered
+
+select * from order_details
+select * from pizzas
+
+select  size, count(order_details_id) as total_orders
+from order_details
+inner join pizzas
+on order_details.pizza_id=pizzas.pizza_id
+group by size 
+order by total_orders desc
+
+--Q5) List the top 5 most ordered pizza type along with their quantities
+
+select pizza_types.name,sum(order_details.quantity) as most_ordered_pizza
+from pizza_types
+
+inner join pizzas
+on pizza_types.pizza_type_id=pizzas.pizza_type_id
+
+inner join order_details
+on order_details.pizza_id=pizzas.pizza_id
+
+group by pizza_types.name
